@@ -19,5 +19,14 @@ pipeline {
                 sh 'zip -u function.zip lambda_function.py'
             }
         }
+        stage('Terraform Validate') {
+            steps {
+                echo 'Validating Terraform configuration...'
+                dir('terraform') {
+                    sh 'terraform init -backend=false'
+                    sh 'terraform validate'
+                }
+            }
+        }
     }
 }
